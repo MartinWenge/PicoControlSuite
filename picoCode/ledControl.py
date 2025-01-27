@@ -52,6 +52,21 @@ def webpage():
     pinState_schuppen = "an" if led_schuppen.value() == 1 else "aus"
     pinState_muehle = "an" if led_muehle.value() == 1 else "aus"
     
+    buttonStateStellwerkOn = "disabled=\"disabled\"" if led_stellwerk.value() == 1 else ""
+    buttonStateStellwerkOff = "style=\"background-color:lightsteelblue;\"" if led_stellwerk.value() == 1 else "disabled=\"disabled\""
+    
+    buttonStateFachwerk1On = "disabled=\"disabled\"" if led_fachwerk1.value() == 1 else ""
+    buttonStateFachwerk1Off = "style=\"background-color:lightsteelblue;\"" if led_fachwerk1.value() == 1 else "disabled=\"disabled\""
+    
+    buttonStateFachwerk2On = "disabled=\"disabled\"" if led_fachwerk2.value() == 1 else ""
+    buttonStateFachwerk2Off = "style=\"background-color:lightsteelblue;\"" if led_fachwerk2.value() == 1 else "disabled=\"disabled\""
+    
+    buttonStateSchuppenOn = "disabled=\"disabled\"" if led_schuppen.value() == 1 else ""
+    buttonStateSchuppenOff = "style=\"background-color:lightsteelblue;\"" if led_schuppen.value() == 1 else "disabled=\"disabled\""
+    
+    buttonStateMuehleOn = "disabled=\"disabled\"" if led_muehle.value() == 1 else ""
+    buttonStateMuehleOff = "style=\"background-color:lightsteelblue;\"" if led_muehle.value() == 1 else "disabled=\"disabled\""
+    
     html = f"""
             <!DOCTYPE html>
             <html>
@@ -64,14 +79,21 @@ def webpage():
                   min-width: 160px;
                   max-width: 260px;
                   height: 40px;
-                  background-color: burlywood;
+                  background-color: lightyellow;
+                  color: black;
+                  border: solid 3px black;
                   border-radius: 6px;
                   font-size: 20px;
               }}
+              input[type="submit"]:disabled {{
+                  color: lightgray;
+                  background-color: gray;
+                  border: solid thin gray;
+              }}
               .grid-container {{
                   display: grid;
-                  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-                  grid-template-rows: 50px 50px 50px;
+                  grid-template-columns: 1fr 1fr 1fr;
+                  grid-template-rows: 60px 60px 60px 60px 60px;
                   column-gap: 10px;
                   justify-items: center;
               }}
@@ -85,47 +107,53 @@ def webpage():
             <input type="submit" value="alle Lichter an" />
             </form>
             <form action="./lightoff">
-            <input type="submit" value="alle Lichter aus" />
+            <input type="submit" style=\"background-color:lightsteelblue;\" value="alle Lichter aus" />
             </form>
             
             <h2>Schalter für einzelne Lichter</h2>
             <div class="grid-container">
                 <form action="./lightonstellwerk">
-                    <input type="submit" value="Licht Stellwerk an" />
+                    <input type="submit" value="Licht Stellwerk an" {buttonStateStellwerkOn} />
                 </form>
-                <form action="./lightonfachwerk1">
-                    <input type="submit" value="Licht Fachwerkhaus 1 an" />
-                </form>
-                <form action="./lightonfachwerk2">
-                    <input type="submit" value="Licht Fachwerkhaus 2 an" />
-                </form>
-                    <form action="./lightonschuppen">
-                <input type="submit" value="Licht Schuppen an" />
-                </form>
-                    <form action="./lightonmuehle">
-                <input type="submit" value="Licht Mühle an" />
-                </form>
-
                 <form action="./lightoffstellwerk">
-                    <input type="submit" value="Licht Stellwerk aus" />
+                    <input type="submit" value="Licht Stellwerk aus" {buttonStateStellwerkOff} />
+                </form>
+                <p>LED Stellwerk ist {pinState_stellwerk}.</p>
+                
+                
+                <form action="./lightonfachwerk1">
+                    <input type="submit" value="Licht Fachwerkhaus 1 an" {buttonStateFachwerk1On} />
                 </form>
                 <form action="./lightofffachwerk1">
-                    <input type="submit" value="Licht Fachwerkhaus 1 aus" />
+                    <input type="submit" value="Licht Fachwerkhaus 1 aus" {buttonStateFachwerk1Off} />
+                </form>
+                <p>LED Fachwerkhaus 1 ist {pinState_fachwerk1}.</p>
+                
+                
+                <form action="./lightonfachwerk2">
+                    <input type="submit" value="Licht Fachwerkhaus 2 an" {buttonStateFachwerk2On} />
                 </form>
                 <form action="./lightofffachwerk2">
-                    <input type="submit" value="Licht Fachwerkhaus 2 aus" />
+                    <input type="submit" value="Licht Fachwerkhaus 2 aus" {buttonStateFachwerk2Off} />
+                </form>
+                <p>LED Fachwerkhaus 2 ist {pinState_fachwerk2}.</p>
+                
+                
+                <form action="./lightonschuppen">
+                    <input type="submit" value="Licht Schuppen an" {buttonStateSchuppenOn} />
                 </form>
                 <form action="./lightoffschuppen">
-                    <input type="submit" value="Licht Schuppen aus" />
+                    <input type="submit" value="Licht Schuppen aus" {buttonStateSchuppenOff} />
+                </form>
+                <p>LED Schuppen ist {pinState_schuppen}.</p>
+                
+                
+                <form action="./lightonmuehle">
+                    <input type="submit" value="Licht Mühle an" {buttonStateMuehleOn} />
                 </form>
                 <form action="./lightoffmuehle">
-                    <input type="submit" value="Licht Mühle aus" />
+                    <input type="submit" value="Licht Mühle aus" {buttonStateMuehleOff} />
                 </form>
-                
-                <p>LED Stellwerk ist {pinState_stellwerk}.</p>
-                <p>LED Fachwerkhaus 1 ist {pinState_fachwerk1}.</p>
-                <p>LED Fachwerkhaus 2 ist {pinState_fachwerk2}.</p>
-                <p>LED Schuppen ist {pinState_schuppen}.</p>
                 <p>LED Mühle ist {pinState_muehle}.</p>
             </div>
             
